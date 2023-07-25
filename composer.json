@@ -1,0 +1,17 @@
+{
+    "name": "daniel/factory",
+    "description": "Daniel Sekula - praksa - factory zadatak - php framework",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Daniel\\Factory\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniel Sekula",
+            "email": "daniel.sekula@factory.dev"
+        }
+    ],
+    "require": {}
+}
