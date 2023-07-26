@@ -2,6 +2,9 @@
 
 namespace Daniel\Factory; 
 
+use Daniel\Factory\RequestInterface;
+use Daniel\Factory\ResponseInterface;
+
 class Router
 {
     private $routes = [];
@@ -17,20 +20,18 @@ class Router
         ];
     }
 
-    public function resolve()
+    public function resolve(RequestInterface $request): ResponseInterface
     {
-        $requestedUrl = trim($_SERVER['REQUEST_URI'], '/');
+        $requestedUrl = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
         $method = $_SERVER['REQUEST_METHOD'];
-    
-        // Loop for match
+
         foreach ($this->routes as $route) {
             if ($route['method'] === $method && $route['url'] === $requestedUrl) {
                 $callback = $route['callback'];
-                $callback();
-                exit();
+                return new Response($callback());
             }
         }
-        http_response_code(404);
-        echo 'Page not found!';
+
+        return new Response('Page not found!', 404);
     }
 }

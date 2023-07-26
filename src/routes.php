@@ -5,10 +5,10 @@ use Daniel\Factory\Router;
 $router = new Router();
 
 $router->addRoute('GET', '/mojaruta', function() {
-    echo "Moja ruta";
+    return 'moja ruta';
 });
-$router->addRoute('GET', '/', function() {
-    echo "index page";
+$router->addRoute('GET', '', function() {
+    return 'index page';
 });
 
 return $router;
