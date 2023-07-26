@@ -21,15 +21,6 @@ class Router
     {
         $requestedUrl = trim($_SERVER['REQUEST_URI'], '/');
         $method = $_SERVER['REQUEST_METHOD'];
-
-        // xampp
-        
-        if (strpos($requestedUrl, 'index.php/') !== false) {
-            $requestedUrl = str_replace(['index.php/'], "", [$requestedUrl])[0];
-        }
-        else if (strpos($requestedUrl, 'index.php') !== false) {
-            $requestedUrl = str_replace(['index.php'], "", [$requestedUrl])[0];
-        }
     
         // Loop for match
         foreach ($this->routes as $route) {
