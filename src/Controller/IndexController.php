@@ -9,7 +9,7 @@ class IndexController
 {
     public function indexAction()
     {
-        return new Response('index page');
+        return new Response('<html><head></head><body><h1>ola</h1>moja ruta</body></html>');
     }
 
     public function indexJsonAction()
