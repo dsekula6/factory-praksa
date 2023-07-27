@@ -1,17 +1,14 @@
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/src/routes.php';
 
-use Daniel\Factory\Request;
-use Daniel\Factory\Router;
-use Daniel\Factory\Response;
+use Daniel\Factory\Class\Router;
+use Daniel\Factory\Class\Response;
+use Daniel\Factory\Class\Request;   
 
-$router = require_once __DIR__ . '/src/routes.php';
 
 $request = new Request($_GET, $_POST, $_SERVER['REQUEST_METHOD']);
 
-// echo $request->getQueryParams("id");
-// echo $router->resolve($request);
-
-$response = $router->resolve($request);
+$response = Router::resolve($request);
 $response->send();

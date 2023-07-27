@@ -3,7 +3,7 @@
         'name' => 'daniel/factory',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '1fe7db8b3e54bb9d84756226f979836849f8d193',
+        'reference' => '18584f4c44df76e144305a75e7f7c7c8e5b3e598',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'daniel/factory' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '1fe7db8b3e54bb9d84756226f979836849f8d193',
+            'reference' => '18584f4c44df76e144305a75e7f7c7c8e5b3e598',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

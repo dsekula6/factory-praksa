@@ -1,12 +1,13 @@
 <?php
 
-namespace Daniel\Factory;
+namespace Daniel\Factory\Class;
 
-use Daniel\Factory\ResponseInterface;
+use Daniel\Factory\Interface\ResponseInterface;
+
 
 class Response implements ResponseInterface
 {
-    private $content;
+    private string $content;
 
     public function __construct(string $content)
     {

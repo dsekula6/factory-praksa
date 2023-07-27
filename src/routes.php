@@ -1,14 +1,11 @@
 <?php
 
-use Daniel\Factory\Router;
+use Daniel\Factory\Class\Router;
 
-$router = new Router();
-
-$router->addRoute('GET', '/mojaruta', function() {
+Router::addRoute('GET', '/mojaruta', function() {
     return 'moja ruta';
 });
-$router->addRoute('GET', '', function() {
+
+Router::addRoute('GET', '/', function() {
     return 'index page';
 });
-
-return $router;

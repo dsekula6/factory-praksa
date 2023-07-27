@@ -1,6 +1,6 @@
 <?php
 
-namespace Daniel\Factory;
+namespace Daniel\Factory\Interface;
 
 interface ResponseInterface
 {
