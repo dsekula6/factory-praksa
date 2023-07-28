@@ -24,3 +24,15 @@ Router::addRoute('GET', '/api/v1/users/{userId}/posts/{postId}', function ($para
 Router::addRoute('GET', '/json', function() use ($indexController) {
     return $indexController->indexJsonAction();
 });
+
+Router::addRoute('GET', '/database', function() use ($indexController) {
+    return $indexController->databaseAction();
+});
+
+Router::addRoute('GET', '/insert', function() use ($indexController) {
+    return $indexController->insertAction();
+});
+
+Router::addRoute('GET', '/update', function() use ($indexController) {
+    return $indexController->updateAction();
+});
