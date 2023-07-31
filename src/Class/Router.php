@@ -9,7 +9,7 @@ class Router
 {
     private static $routes = [];
 
-    public static function addRoute(string $method, string $url, callable $callback)
+    public static function addRoute(string $method, string $url, array $callback)
     {
         self::$routes[] = [
             'method' => $method,
