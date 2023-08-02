@@ -13,10 +13,4 @@ Router::addRoute('GET', '/api/v1/users/{userId}/posts/{postId}', [IndexControlle
 
 Router::addRoute('GET', '/json', [IndexController::class, 'indexJsonAction']);
 
-Router::addRoute('GET', '/database', [IndexController::class, 'databaseAction']);
-
-Router::addRoute('GET', '/insert', [IndexController::class, 'insertAction']);
-
-Router::addRoute('GET', '/update', [IndexController::class, 'updateAction']);
-
 Router::addRoute('GET', '/twig', [IndexController::class, 'twigAction']);

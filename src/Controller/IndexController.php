@@ -6,6 +6,8 @@ namespace Daniel\Factory\Controller;
 use Daniel\Factory\Class\Response;
 use Daniel\Factory\Class\Connection;
 use Daniel\Factory\Class\JsonResponse;
+use Daniel\Factory\Class\Model;
+use Daniel\Factory\Class\MyModel;
 use Daniel\Factory\Class\TwigResponse;
 
 class IndexController
@@ -23,6 +25,21 @@ class IndexController
 
     public static function mojaRutaAction()
     {
+        $vijest = new MyModel(
+            [
+                'naslov' => 'moja ruta',
+                'sazetak' => 'sazetak moja ruta',
+                'datum' => '02.02.2023.',
+                'tekst' => 'moja ruta tekst',
+                'slika' => 'a',
+                'kategorija' => 'a',
+                'arhiva' => 0,
+            ]
+        );
+        $vijest->save();
+        // $vijest = MyModel::find(13);
+        $vijest->naslov = 'promijenjeni naslov';
+        $vijest->update();
         return new Response('moja ruta');
     }
 
@@ -37,63 +54,6 @@ class IndexController
         $userId = $params['userId'];
         $postId = $params['postId'];
         return new Response($userId . ' ' . $postId);
-    }
-
-    public static function databaseAction()
-    {
-        $db = Connection::getInstance();
-
-        $query = "SELECT * FROM meal WHERE category_id = :category";
-        $params = ['category' => 251];
-        $result = $db->fetchAssoc($query, $params);
-
-        $query2 = "SELECT * FROM meal WHERE category_id = ?";
-        $params2 = [251];
-        $result2 = $db->fetchAssocAll($query2, $params2);
-
-        return new Response(json_encode($result) . '<br><br>' . json_encode($result2));
-    }
-    public static function insertAction()
-    {
-        $db = Connection::getInstance();
-
-        $data = [
-            'naslov' => 'test naslov',
-            'sazetak' => 'sazetak asfsgfsg f fs idl sjdf',
-            'datum' => '01.01.2023.',
-            'tekst' => 'sggdsfdaff',
-            'slika' => 'a',
-            'kategorija' => 'a',
-            'arhiva' => 0,
-        ];
-        $table = 'vijesti';
-        
-        return new Response($db->insert($table, $data));
-
-    }
-    public static function updateAction()
-    {
-        $db = Connection::getInstance();
-
-        $dataToUpdate = [
-            'id' => 5,
-            'naslov' => 'updateani naslov',
-            'sazetak' => 'updateani sazetak asfsgfsg f fs idl sjdf',
-            'datum' => '01.01.2023.',
-            'tekst' => 'sggdsfdaff',
-            'slika' => 'a',
-            'kategorija' => 'a',
-            'arhiva' => 0,
-        ];
-        $table = 'vijesti';
-
-        $success = $db->update($table, $dataToUpdate);
-        if ($success) {
-            return new Response("Update successful");
-        } else {
-            return new Response("Update failed");
-        }
-
     }
     
     public static function twigAction()
