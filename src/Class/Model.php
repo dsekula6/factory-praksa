@@ -6,21 +6,21 @@ use Exception;
 
 class Model
 {
-    protected static $table;
-    protected static $primaryKey = 'id';
-    protected $attributes = [];
+    protected static string $table;
+    protected static string $primaryKey = 'id';
+    protected array $attributes = [];
 
-    public function __construct($attributes = [])
+    public function __construct(array $attributes = [])
     {
         $this->attributes = $attributes;
     }
 
-    public function __set($name, $value)
+    public function __set(string $name, string $value)
     {
         $this->attributes[$name] = $value;
     }
 
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         return $this->attributes[$name] ?? null;
     }
@@ -47,12 +47,18 @@ class Model
             throw new Exception("No primary key for update.");
         }
 
+        $primaryKey = static::$primaryKey;
         $table = static::$table;
 
-        $db->update($table, $data);
+        $condition = [
+            'column' => $primaryKey,
+            'value' => $data[$primaryKey],
+        ];
+
+        $db->update($table, $data, $condition);
     }
 
-    public static function find($primaryKeyValue)
+    public static function find(string $primaryKeyValue): ?static
     {
         $db = Connection::getInstance();
         $primaryKey = static::$primaryKey;
@@ -70,7 +76,7 @@ class Model
         return null;
     }
 
-    public function toArray()
+    public function toArray(): ?array
     {
         return $this->attributes;
     }

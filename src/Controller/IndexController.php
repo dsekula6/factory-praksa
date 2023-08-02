@@ -3,27 +3,26 @@
 namespace Daniel\Factory\Controller;
 
 
-use Daniel\Factory\Class\Response;
-use Daniel\Factory\Class\Connection;
-use Daniel\Factory\Class\JsonResponse;
-use Daniel\Factory\Class\Model;
 use Daniel\Factory\Class\MyModel;
-use Daniel\Factory\Class\TwigResponse;
+use Daniel\Factory\Class\Request;
+use Daniel\Factory\Response\Response;
+use Daniel\Factory\Response\JsonResponse;
+use Daniel\Factory\Response\TwigResponse;
 
 class IndexController
 {
-    public static function indexAction()
+    public function indexAction()
     {
-        return new Response('<html><head></head><body><h1>ola</h1>index ruta</body></html>');
+        return new Response('<html><head></head><body><h1>hello</h1>index ruta</body></html>');
     }
 
-    public static function indexJsonAction()
+    public function indexJsonAction()
     {
         $jsonData = ['message' => 'JSON response!', '2' => 'two'];
         return new JsonResponse($jsonData);
     }
 
-    public static function mojaRutaAction()
+    public function mojaRutaAction()
     {
         $vijest = new MyModel(
             [
@@ -43,20 +42,21 @@ class IndexController
         return new Response('moja ruta');
     }
 
-    public static function apiV1ProductsAction($params)
+    public function apiV1ProductsAction(Request $request)
     {
+        $params = $request->getPlaceholderParams();
         $productId = $params['productId'];
         return new Response($productId);
     }
 
-    public static function apiV1UsersPostsAction($params)
+    public function apiV1UsersPostsAction(Request $request)
     {
-        $userId = $params['userId'];
-        $postId = $params['postId'];
-        return new Response($userId . ' ' . $postId);
+        $params = $request->getPlaceholderParams();
+        $query = json_encode($request->getQueryParams());
+        return new Response(json_encode($params).'\n'.$query);
     }
     
-    public static function twigAction()
+    public function twigAction()
     {
         return new TwigResponse('index.html.twig', ['key1' => 'value1']);
     }

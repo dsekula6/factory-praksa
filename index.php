@@ -6,7 +6,6 @@ use Daniel\Factory\Class\Request;
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/routes.php';
 
-$request = new Request($_GET, $_POST, $_SERVER['REQUEST_METHOD']);
-
+$request = new Request();
 $response = Router::resolve($request);
-$response->send();
+echo $response->send();

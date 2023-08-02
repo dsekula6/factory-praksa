@@ -4,5 +4,5 @@ namespace Daniel\Factory\Class;
 
 class MyModel extends Model
 {
-    protected static $table = 'vijesti';
+    protected static string $table = 'vijesti';
 }

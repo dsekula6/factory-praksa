@@ -1,21 +1,21 @@
 <?php
 
-namespace Daniel\Factory\Class;
+namespace Daniel\Factory\Response;
 
 use Daniel\Factory\Interface\ResponseInterface;
 
 class JsonResponse implements ResponseInterface
 {
-    private $data;
+    private string $data;
 
-    public function __construct($data)
+    public function __construct(array $data)
     {
-        $this->data = $data;
+        $this->data = json_encode($data);
     }
 
     public function send()
     {
         header('Content-Type: application/json');
-        echo json_encode($this->data);
+        return $this->data;
     }
 }

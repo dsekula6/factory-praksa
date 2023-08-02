@@ -10,12 +10,13 @@ class Request implements RequestInterface
     private array $parsedBody;
     private string $method;
     private string $uri;
+    private array $urlParams = [];
 
-    public function __construct(array $queryParams, array $parsedBody, string $method)
+    public function __construct()
     {
-        $this->queryParams = $queryParams;
-        $this->parsedBody = $parsedBody;
-        $this->method = $method;
+        $this->queryParams = $_GET;
+        $this->parsedBody = $_POST;
+        $this->method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
     }
     public function getQueryParams()
@@ -38,7 +39,14 @@ class Request implements RequestInterface
         return $this->uri;
     }
     
-    // dodaj jos neke metode za parseanje url-a? 
-    // da ne bude u resolve metodi u routeru pa zamijeni
+    public function getPlaceholderParams(): array
+    {
+        return $this->urlParams;
+    }
+
+    public function setPlaceholderParams(array $params): void
+    {
+        $this->urlParams = $params;
+    }
 
 }

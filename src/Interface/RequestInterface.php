@@ -11,4 +11,8 @@ interface RequestInterface
     public function getMethod();
 
     public function getUri();
+
+    public function getPlaceholderParams();
+    
+    public function setPlaceholderParams(array $params);
 }

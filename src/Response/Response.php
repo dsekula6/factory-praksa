@@ -1,6 +1,6 @@
 <?php
 
-namespace Daniel\Factory\Class;
+namespace Daniel\Factory\Response;
 
 use Daniel\Factory\Interface\ResponseInterface;
 
@@ -16,7 +16,6 @@ class Response implements ResponseInterface
 
     public function send(): string
     {
-        echo $this->content;
         return $this->content;
     }
 }

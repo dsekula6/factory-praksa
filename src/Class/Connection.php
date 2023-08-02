@@ -8,8 +8,8 @@ use PDOException;
 
 class Connection
 {
-    private static $instance;
-    private $connection;
+    private static ?Connection $instance = null;
+    private PDO $connection;
 
     private function __construct()
     {
@@ -34,21 +34,21 @@ class Connection
         return self::$instance;
     }
 
-    public function fetchAssoc($query, $params = [])
+    public function fetchAssoc(string $query, array $params = [])
     {
         $stmt = $this->connection->prepare($query);
         $stmt->execute($params);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function fetchAssocAll($query, $params = [])
+    public function fetchAssocAll(string $query, array $params = [])
     {
         $stmt = $this->connection->prepare($query);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insert($table, $data)
+    public function insert(string $table, array $data)
     {
         $columns = implode(', ', array_keys($data));
         $placeholders = ':' . implode(', :', array_keys($data));
@@ -68,33 +68,31 @@ class Connection
         }
     }
 
-    public function update($table, $data)
+    public function update(string $table, array $data, array $condition)
     {
-        if (!isset($data['id'])) {
-            throw new Exception("no 'id' match");
+        if (!isset($condition['column']) || !isset($condition['value'])) {
+            throw new Exception("Invalid condition. Both 'column' and 'value' must be provided.");
         }
-
-        $id = $data['id'];
-        unset($data['id']);
-
+    
         $setClause = '';
         foreach ($data as $column => $value) {
             $setClause .= "$column = :$column, ";
         }
         $setClause = rtrim($setClause, ', ');
-
-        $query = "UPDATE $table SET $setClause WHERE id = :id";
+    
+        $query = "UPDATE $table SET $setClause WHERE {$condition['column']} = :condition_value";
         $stmt = $this->connection->prepare($query);
-
+    
         foreach ($data as $column => $value) {
             $stmt->bindValue(":$column", $value);
         }
-        $stmt->bindValue(":id", $id);
-
+        $stmt->bindValue(":condition_value", $condition['value']);
+    
         try {
             return $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception("Update failed: " . $e->getMessage());
         }
     }
+    
 }

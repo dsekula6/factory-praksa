@@ -2,12 +2,13 @@
 
 namespace Daniel\Factory\Class;
 
+use Daniel\Factory\Response\Response;
 use Daniel\Factory\Interface\RequestInterface;
 use Daniel\Factory\Interface\ResponseInterface;
 
 class Router
 {
-    private static $routes = [];
+    private static array $routes = [];
 
     public static function addRoute(string $method, string $url, array $callback)
     {
@@ -25,15 +26,19 @@ class Router
 
         foreach (self::$routes as $route) {
             if ($route['method'] === $method && self::matchesUrl($route['url'], $requestedUrl, $params)) {
-                $callback = $route['callback'];
-                return $callback($params);
+                [$controllerClass, $controllerMethod] = $route['callback'];
+                $controller = new $controllerClass();
+
+                $request->setPlaceholderParams($params);
+
+                return $controller->{$controllerMethod}($request);
             }
         }
 
         return new Response('Page not found!');
     }
 
-    private static function matchesUrl($routeUrl, $requestedUrl, &$params)
+    private static function matchesUrl($routeUrl, $requestedUrl, &$params): bool
     {
         $routeUrlParts = explode('/', trim($routeUrl, '/'));
         $requestedUrlParts = explode('/', trim($requestedUrl, '/'));
