@@ -3,9 +3,13 @@
 namespace Daniel\Factory\Class;
 
 use Exception;
+use Daniel\Factory\Class\Traits\HasTimestamps;
+use Daniel\Factory\Class\Traits\DeletedAt;
 
 class Model
 {
+    use HasTimestamps, DeletedAt;
+
     protected static string $table;
     protected static string $primaryKey = 'id';
     protected array $attributes = [];
@@ -27,35 +31,24 @@ class Model
 
     public function save()
     {
-        $data = $this->attributes;
-
-        $db = Connection::getInstance();
-        $primaryKey = static::$primaryKey;
-        $table = static::$table;
-
-        $id = $db->insert($table, $data);
-
-        $this->attributes[$primaryKey] = $id;
+        $this->setCreatedAt();
+        $id = Connection::getInstance()->insert(static::$table, $this->attributes);
+        $this->attributes[static::$primaryKey] = $id;
     }
 
     public function update()
     {
-        $data = $this->attributes;
-        $db = Connection::getInstance();
-
-        if (!isset($data[static::$primaryKey])) {
+        if (!isset($this->attributes[static::$primaryKey])) {
             throw new Exception("No primary key for update.");
         }
-
-        $primaryKey = static::$primaryKey;
-        $table = static::$table;
+        $this->setUpdatedAt();
 
         $condition = [
-            'column' => $primaryKey,
-            'value' => $data[$primaryKey],
+            'column' => static::$primaryKey,
+            'value' => $this->attributes[static::$primaryKey],
         ];
 
-        $db->update($table, $data, $condition);
+        Connection::getInstance()->update(static::$table, $this->attributes, $condition);
     }
 
     public static function find(string $primaryKeyValue): ?static

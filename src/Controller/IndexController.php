@@ -36,9 +36,10 @@ class IndexController
             ]
         );
         $vijest->save();
-        // $vijest = MyModel::find(13);
         $vijest->naslov = 'promijenjeni naslov';
         $vijest->update();
+        // $vijest2 = MyModel::find('5');
+        // $vijest2->softDelete();
         return new Response('moja ruta');
     }
 

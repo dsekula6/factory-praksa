@@ -94,5 +94,23 @@ class Connection
             throw new Exception("Update failed: " . $e->getMessage());
         }
     }
+
+    public function delete(string $table, array $condition)
+    {
+        if (!isset($condition['column']) || !isset($condition['value'])) {
+            throw new Exception("Invalid condition.");
+        }
+
+        $query = "DELETE FROM $table WHERE {$condition['column']} = :condition_value";
+        $stmt = $this->connection->prepare($query);
+
+        $stmt->bindValue(":condition_value", $condition['value']);
+
+        try {
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Delete failed: " . $e->getMessage());
+        }
+    }
     
 }
