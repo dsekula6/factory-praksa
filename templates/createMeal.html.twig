@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Meal</title>
+</head>
+<body>
+    <h1>Add Meal</h1>
+
+    {# Render the form #}
+    <form method="post">
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.category_id) }}
+
+        <button type="submit">Add Meal</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Meal</title>
+</head>
+<body>
+    <h1>Add Meal</h1>
+
+    {# Render the form #}
+    <form method="post">
+        {{ form_row(form.naslov) }}
+        {{ form_row(form.sazetak) }}
+        {{ form_row(form.tekst) }}
+        {{ form_row(form.slika) }}
+        {{ form_row(form.kategorija) }}
+        {{ form_row(form.arhiva) }}
+        {{ form_row(form.datum) }}
+
+        <button type="submit">Add Meal</button>
+    </form>
+</body>
+</html>

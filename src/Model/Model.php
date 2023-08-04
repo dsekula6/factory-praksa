@@ -1,10 +1,11 @@
 <?php
 
-namespace Daniel\Factory\Class;
+namespace Daniel\Factory\Model;
 
 use Exception;
-use Daniel\Factory\Class\Traits\HasTimestamps;
+use Daniel\Factory\Class\Connection;
 use Daniel\Factory\Class\Traits\DeletedAt;
+use Daniel\Factory\Class\Traits\HasTimestamps;
 
 class Model
 {
@@ -19,7 +20,7 @@ class Model
         $this->attributes = $attributes;
     }
 
-    public function __set(string $name, string $value)
+    public function __set(string $name, mixed $value)
     {
         $this->attributes[$name] = $value;
     }
@@ -32,7 +33,7 @@ class Model
     public function save()
     {
         $this->setCreatedAt();
-        $id = Connection::getInstance()->insert(static::$table, $this->attributes);
+        $id = Connection::getInstance()->insert(static::$table, [$this->attributes]);
         $this->attributes[static::$primaryKey] = $id;
     }
 

@@ -14,7 +14,7 @@ class Connection
     private function __construct()
     {
         $dbHost = 'localhost';
-        $dbName = 'jutarnji';
+        $dbName = 'jela';
         $dbUser = 'root';
         $dbPass = 'root';
 
@@ -48,26 +48,31 @@ class Connection
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insert(string $table, array $data)
+    public function insert(string $table, array $rows)
     {
-        $columns = implode(', ', array_keys($data));
-        $placeholders = ':' . implode(', :', array_keys($data));
-
+        if (empty($rows)) {
+            throw new Exception("Insert failed:empty.");
+        }
+        $columns = implode(', ', array_keys($rows[0]));
+        $placeholders = ':' . implode(', :', array_keys($rows[0]));
+    
         $query = "INSERT INTO $table ($columns) VALUES ($placeholders)";
         $stmt = $this->connection->prepare($query);
-
-        foreach ($data as $key => $value) {
-            $stmt->bindValue(":$key", $value);
-        }
-
+    
         try {
-            $stmt->execute();
+            foreach ($rows as $row) {
+                foreach ($row as $key => $value) {
+                    $stmt->bindValue(":$key", $value);
+                }
+                $stmt->execute();
+                $stmt->closeCursor();
+            }
             return $this->connection->lastInsertId();
         } catch (PDOException $e) {
             throw new Exception("Insert failed: " . $e->getMessage());
         }
     }
-
+    
     public function update(string $table, array $data, array $condition)
     {
         if (!isset($condition['column']) || !isset($condition['value'])) {

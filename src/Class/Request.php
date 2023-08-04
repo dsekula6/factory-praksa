@@ -19,6 +19,17 @@ class Request implements RequestInterface
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
     }
+
+    public function __set(string $name, mixed $value)
+    {
+        $this->$name = $value;
+    }
+
+    public function __get(string $name): mixed
+    {
+        return $this->$name ?? null;
+    }
+
     public function getQueryParams()
     {
         return $this->queryParams;

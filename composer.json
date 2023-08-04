@@ -14,6 +14,9 @@
         }
     ],
     "require": {
-        "twig/twig": "^3.7"
+        "twig/twig": "^3.7",
+        "symfony/form": "^6.3",
+        "symfony/twig-bundle": "^6.3",
+        "symfony/translation": "^6.3"
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Daniel\Factory\Controller;
 
-
-use Daniel\Factory\Class\MyModel;
 use Daniel\Factory\Class\Request;
+use Daniel\Factory\Model\MyModel;
+use Daniel\Factory\Class\Connection;
 use Daniel\Factory\Response\Response;
 use Daniel\Factory\Response\JsonResponse;
 use Daniel\Factory\Response\TwigResponse;
@@ -41,6 +41,21 @@ class IndexController
         // $vijest2 = MyModel::find('5');
         // $vijest2->softDelete();
         return new Response('moja ruta');
+    }
+    public function insertAction()
+    {
+        $vijest = new MyModel(
+                [
+                    'naslov' => 'insert1',
+                    'sazetak' => 'sazetak moja ruta',
+                    'datum' => '02.02.2023.',
+                    'tekst' => 'moja ruta tekst',
+                    'slika' => 'a',
+                    'kategorija' => 'a',
+                    'arhiva' => 0,
+                ]);
+        $vijest->save();
+        return new Response('inserted');
     }
 
     public function apiV1ProductsAction(Request $request)
