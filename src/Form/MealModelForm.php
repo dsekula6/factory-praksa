@@ -7,10 +7,9 @@ use Daniel\Factory\Model\MealModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class MealModelForm extends AbstractType
 {
@@ -25,6 +24,11 @@ class MealModelForm extends AbstractType
             ])
             ->add('category_id', NumberType::class, [
                 'label' => 'category',
+            ])
+            ->add('ingredients', CollectionType::class, [
+                'entry_type' => MealIngredientModelForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
             ]);
     }
 

@@ -6,13 +6,31 @@
 <body>
     <h1>Add Meal</h1>
 
-    {# Render the form #}
     <form method="post">
         {{ form_row(form.title) }}
         {{ form_row(form.description) }}
         {{ form_row(form.category_id) }}
 
+        <h2>Ingredients:</h2>
+        <ul id="ingredients-list">
+        </ul>
+
+        <div id="ingredient-prototype" data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e }}"></div>
+        <button type="button" onclick="addIngredient()">Add Ingredient</button>
+
         <button type="submit">Add Meal</button>
     </form>
+
+    <script>
+        function addIngredient() {
+            var list = document.getElementById('ingredients-list');
+            var prototype = document.getElementById('ingredient-prototype').dataset.prototype;
+            var index = list.getElementsByTagName('li').length;
+            var newIngredient = prototype.replace(/__name__/g, index);
+            var li = document.createElement('li');
+            li.innerHTML = newIngredient;
+            list.appendChild(li);
+        }
+    </script>
 </body>
 </html>

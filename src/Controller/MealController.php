@@ -24,9 +24,8 @@ class MealController
         $mealForm->handleRequest();
         
         if ($mealForm->isSubmitted()) {
-            $data = $mealForm->getData();
-            $title = $data->title;
-            $description = $data->description;
+            $title = $mealModel->title;
+            $description = $mealModel->description;
         
             if (empty($title)) {
                 $mealForm->get('title')->addError(new FormError('Title field cannot be empty.'));
@@ -44,6 +43,8 @@ class MealController
                 header("Location: /error");
                 exit;
             }
+
+            // dd($mealModel);
         
             $mealModel->save();
         
